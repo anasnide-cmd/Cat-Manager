@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🐱 Cat Management System</h1>
+        
+        <!-- Borang Tambah Kucing -->
+        <div class="form-section">
+            <h2>Add New Cat</h2>
+            <form id="catForm">
+                <input type="text" id="catName" placeholder="Cat name" required>
+                <input type="text" id="catBreed" placeholder="Breed">
+                <input type="color" id="catColor" value="#ff6b6b">
+                <button type="submit">Add Cat</button>
+            </form>
+        </div>
+
+        <!-- Senarai Kucing -->
+        <div class="cat-list">
+            <h2>Registered Cats (Max 40)</h2>
+            <div id="catsContainer"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
