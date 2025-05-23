@@ -30,6 +30,10 @@
       background: #3498db;
       padding: 12px 25px;
       font-size: 16px;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
       transition: all 0.3s ease;
     }
 
@@ -70,10 +74,10 @@
       right: 0;
       bottom: 0;
       background: rgba(0,0,0,0.5);
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
-      display: none;
+      z-index: 999;
     }
 
     .modal-content {
@@ -109,6 +113,15 @@
       background: #ffebee;
       color: #d32f2f;
     }
+
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -125,11 +138,8 @@
   <div class="modal" id="catModal">
     <div class="modal-content">
       <h2 style="margin-top: 0;">Register New Cat</h2>
-      
-      <div class="status-message loading" id="loadingStatus">
-        ⏳ Optimizing and uploading image...
-      </div>
-      
+
+      <div class="status-message loading" id="loadingStatus">⏳ Optimizing and uploading image...</div>
       <div class="status-message error" id="errorStatus"></div>
 
       <input type="file" id="catImage" accept="image/*" required>
@@ -141,64 +151,51 @@
       <input type="tel" id="catContact" placeholder="Owner's Phone Number">
 
       <div style="margin-top: 20px; display: flex; gap: 10px;">
-        <button onclick="addCat()" style="background: #27ae60;">Save Cat</button>
-        <button onclick="closeModal()" style="background: #e74c3c;">Cancel</button>
+        <button onclick="addCat()" style="background: #27ae60; color: white;">Save Cat</button>
+        <button onclick="closeModal()" style="background: #7f8c8d; color: white;">Cancel</button>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
-    // Cloudinary Configuration
-    const CLOUD_NAME = 'dtpp8aqnf';    // Your cloud name
-    const UPLOAD_PRESET = 'cat_upload'; // Your upload preset name
+    const CLOUD_NAME = 'dtpp8aqnf';
+    const UPLOAD_PRESET = 'cat_upload';
 
     let cats = JSON.parse(localStorage.getItem('cats') || '[]');
 
     function showStatus(type, message) {
-      const statusMap = {
-        loading: { element: document.getElementById('loadingStatus'), default: '⏳ Optimizing and uploading image...' },
-        error: { element: document.getElementById('errorStatus'), default: '' }
-      };
+      document.getElementById('loadingStatus').style.display = 'none';
+      document.getElementById('errorStatus').style.display = 'none';
 
-      Object.values(statusMap).forEach(({ element }) => {
-        element.style.display = 'none';
-        element.textContent = element.dataset.default;
-      });
-
-      if (type && statusMap[type]) {
-        const { element, default: defaultMsg } = statusMap[type];
-        element.style.display = 'block';
-        if (message) element.textContent = message;
-        else element.textContent = defaultMsg;
+      if (type === 'loading') {
+        document.getElementById('loadingStatus').style.display = 'block';
+      } else if (type === 'error') {
+        const errorEl = document.getElementById('errorStatus');
+        errorEl.textContent = message || 'An error occurred.';
+        errorEl.style.display = 'block';
       }
     }
 
     async function uploadImage(file) {
       showStatus('loading');
-      
       try {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('upload_preset', UPLOAD_PRESET);
         formData.append('folder', 'cat_profiles');
-        formData.append('quality', 'auto');
-        formData.append('format', 'auto');
 
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-          { method: 'POST', body: formData }
-        );
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+          method: 'POST',
+          body: formData
+        });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error(`Upload failed with status ${response.status}`);
         const data = await response.json();
         return data.secure_url.replace('/upload/', '/upload/q_auto,f_auto/');
-      } catch (error) {
-        showStatus('error', `🚨 Upload failed: ${error.message}`);
-        throw error;
+      } catch (err) {
+        showStatus('error', err.message);
+        throw err;
       } finally {
         showStatus(null);
       }
@@ -215,7 +212,7 @@
 
       try {
         const imageUrl = await uploadImage(fileInput.files[0]);
-        
+
         const cat = {
           id: generateCatID(),
           name: nameInput.value.trim(),
@@ -244,6 +241,7 @@
       cats.forEach(cat => {
         const card = document.createElement('div');
         card.className = 'cat-card';
+        const qrId = `qr-${cat.id}`;
         card.innerHTML = `
           <h3>${cat.name} <small>(${cat.id})</small></h3>
           ${cat.imageUrl ? `<img src="${cat.imageUrl}" class="cat-image" alt="${cat.name}" loading="lazy">` : ''}
@@ -254,20 +252,20 @@
             <p>${cat.owner ? `<strong>Owner:</strong> ${cat.owner}` : ''}</p>
             <p>${cat.contact ? `<strong>Contact:</strong> ${cat.contact}` : ''}</p>
           </div>
-          <div class="qr-code" id="qr-${cat.id}"></div>
-          <button onclick="deleteCat('${cat.id}')" style="margin-top: 10px;">Delete</button>
+          <div class="qr-code" id="${qrId}"></div>
+          <button class="delete-btn" onclick="deleteCat('${cat.id}')">Delete</button>
         `;
-
-        // Generate QR Code
-        QRCode.toCanvas(document.getElementById(`qr-${cat.id}`), 
-          `CAT ID: ${cat.id}\nName: ${cat.name}\nOwner: ${cat.owner}\nContact: ${cat.contact}`,
-          { width: 128 },
-          (error) => {
-            if (error) console.error('QR Generation Error:', error);
-          }
-        );
-
         catList.appendChild(card);
+
+        setTimeout(() => {
+          QRCode.toCanvas(document.getElementById(qrId),
+            `CAT ID: ${cat.id}\nName: ${cat.name}\nOwner: ${cat.owner}\nContact: ${cat.contact}`,
+            { width: 128 },
+            (error) => {
+              if (error) console.error('QR Generation Error:', error);
+            }
+          );
+        }, 0);
       });
     }
 
@@ -280,15 +278,16 @@
     }
 
     function generateCatID() {
-      const lastId = cats.reduce((max, cat) => 
+      const lastId = cats.reduce((max, cat) =>
         Math.max(max, parseInt(cat.id.split('-')[1]) || 0), 0);
       return `CAT-${String(lastId + 1).padStart(3, '0')}`;
     }
 
     function openModal() {
       document.getElementById('catModal').style.display = 'flex';
-      document.getElementById('catImage').value = '';
-      document.getElementById('catName').value = '';
+      ['catImage', 'catName', 'catBreed', 'catAge', 'catColor', 'catOwner', 'catContact'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
     }
 
     function closeModal() {
@@ -296,7 +295,12 @@
       showStatus(null);
     }
 
-    // Initial render
+    // Tutup modal bila klik luar
+    window.onclick = function(e) {
+      const modal = document.getElementById('catModal');
+      if (e.target === modal) closeModal();
+    }
+
     renderCats();
   </script>
 </body>
