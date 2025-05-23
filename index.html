@@ -1,27 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Cat ID</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat IC Digital - Feline Care Revolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+        }
+
+        /* Navigation */
+        nav {
+            background: #fff;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #34495e;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 5%;
+            text-align: center;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1519052537078-e6302a4968d4');
+            background-size: cover;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 5%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem 5%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Digital Cat ID</h1>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Cat IC Digital</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
 
-  <form id="cat-form">
-    <input type="text" id="name" placeholder="Cat Name" required>
-    <input type="date" id="birth_date" required>
-    <input type="text" id="fur_color" placeholder="Fur Color">
-    <input type="text" id="owner_name" placeholder="Owner Name">
-    <input type="text" id="owner_phone" placeholder="Owner Phone">
-    <input type="file" id="image" accept="image/*" required>
-    <button type="submit">Submit</button>
-  </form>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Smart Care for Modern Cats</h1>
+        <p>Digital solutions for feline health, nutrition, and lifestyle management</p>
+        <a href="#signup" class="cta-button">Get Started</a>
+    </section>
 
-  <h2>Cat ID List</h2>
-  <div id="cat-list"></div>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-paw feature-icon"></i>
+            <h3>Digital Health Profile</h3>
+            <p>Track your cat's medical history, vaccinations, and health metrics in one secure platform.</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="fas fa-shield-cat feature-icon"></i>
+            <h3>AI Behavior Analysis</h3>
+            <p>Our smart system helps interpret your cat's behavior patterns and needs.</p>
+        </div>
 
-  <script src="script.js"></script>
+        <div class="feature-card">
+            <i class="fas fa-cat feature-icon"></i>
+            <h3>Smart Nutrition Plan</h3>
+            <p>Personalized feeding recommendations based on breed, age, and health conditions.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Contact us: meow@cat-ic.digital</p>
+        <p>Follow us on social media</p>
+        <div style="margin-top: 1rem;">
+            <i class="fab fa-facebook" style="margin: 0 0.5rem;"></i>
+            <i class="fab fa-instagram" style="margin: 0 0.5rem;"></i>
+            <i class="fab fa-twitter" style="margin: 0 0.5rem;"></i>
+        </div>
+        <p style="margin-top: 1rem;">© 2023 Cat IC Digital. All rights reserved.</p>
+    </footer>
 </body>
 </html>
