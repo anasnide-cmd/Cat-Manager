@@ -1,71 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Digital Cat ID System</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mr. Cat ID</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>🐱 Digital Cat ID System</h1>
-        
-        <!-- Input Form -->
-        <div class="form-section">
-            <div class="form-group">
-                <label>Cat Name:</label>
-                <input type="text" id="catName" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Date of Birth:</label>
-                <input type="date" id="dob" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Breed:</label>
-                <input type="text" id="breed">
-            </div>
-            
-            <div class="form-group">
-                <label>Upload Photo:</label>
-                <input type="file" id="catPhoto" accept="image/*">
-            </div>
-            
-            <button onclick="generateID()">Generate ID Card</button>
-        </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
 
-        <!-- ID Card Display -->
-        <div class="id-card" id="idCard">
-            <div class="holographic-strip"></div>
-            <div class="header">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFWSURBVHgB7ZbBDcIwDEV/LSAjMAIjMELZgBEYgREYgREYgRHoBvz0E4hCbCfY6kXqSZXi5O99x3ElSZIkv8QK2AMn4A48gDtwAXZAPWrBBlkDZ+AJ9MELeAJHYDm4YA2c8kL9xQXYFQvWwKUw3BdcgVWRYAPcJgT/C1egKRK0wGOG8D3QFAk2wHOm8D3QjBZsgfuM4XugGSVoJ4TvgWbQ4R0hK4K8g7qRgh3wmil8DzSDBFvgMXN4DzSDBFvgVQjeA82gI9wTrUL4HmgGCVrgVRDeA01R0l4F4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3QFCVtVRDeA01R0lYF4T3Q/AB4vX+TH2NrXwAAAABJRU5ErkJggg==" class="logo">
-                <h2>FELINE IDENTIFICATION CARD</h2>
-            </div>
-            
-            <div class="content">
-                <div class="left">
-                    <img id="catImage" class="cat-photo">
-                    <div class="qr-container" id="qrcode"></div>
-                </div>
-                
-                <div class="right">
-                    <p><strong>ID:</strong> <span id="displayId">CAT-0000</span></p>
-                    <p><strong>Name:</strong> <span id="displayName">-</span></p>
-                    <p><strong>DOB:</strong> <span id="displayDob">-</span></p>
-                    <p><strong>Breed:</strong> <span id="displayBreed">-</span></p>
-                    <p><strong>Chip No:</strong> <span id="displayChip">CHIP-XXXXXX</span></p>
-                    <p><strong>Issued:</strong> <span id="issueDate">-</span></p>
-                </div>
-            </div>
-            
-            <div class="footer">
-                <div class="security-code">SEC-<span id="securityCode">XXXX</span></div>
-                <div class="validity">Valid until: <span id="validDate">-</span></div>
-            </div>
-        </div>
-    </div>
+  <header>
+    <h1>Mr. Cat ID</h1>
+    <p>Your cat's identity starts here.</p>
+  </header>
 
-    <script src="script.js"></script>
+  <section class="card-grid">
+    <a href="cat.html?id=1" class="card">
+      <img src="https://placekitten.com/300/200" alt="Cat" />
+      <h2>Fluffy</h2>
+      <p>Breed: Persian</p>
+    </a>
+
+    <a href="cat.html?id=2" class="card">
+      <img src="https://placekitten.com/301/200" alt="Cat" />
+      <h2>Snowy</h2>
+      <p>Breed: Siamese</p>
+    </a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Mr. Cat ID — by Mr. Anas Nidir</p>
+  </footer>
 </body>
 </html>
